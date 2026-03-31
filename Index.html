@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VG-Lat — Latitude Project Setup</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:   #1B2B5E;
+  --navy2:  #0F1C40;
+  --teal:   #00AEEF;
+  --green:  #4BAE4F;
+  --light:  #F0F4FA;
+  --mid:    #C8D8EE;
+  --text:   #1B2B5E;
+  --muted:  #6B7A99;
+  --card-bg:#FFFFFF;
+  --border: rgba(27,43,94,0.10);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--light);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% 0%, rgba(0,174,239,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 100%, rgba(75,174,79,0.06) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+header {
+  background: var(--navy);
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.22);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-mark {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brand-main {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.brand-main span { color: var(--green); }
+
+.brand-sub {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 10px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 2px;
+  margin-top: 2px;
+}
+
+.hero {
+  position: relative;
+  z-index: 1;
+  padding: 56px 40px 0;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--green);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: clamp(38px, 5vw, 58px);
+  color: var(--navy);
+  line-height: 1.0;
+  margin-bottom: 14px;
+}
+
+.hero-title .accent { color: var(--green); }
+
+.hero-desc {
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 540px;
+  line-height: 1.65;
+  font-weight: 400;
+  margin-bottom: 40px;
+}
+
+.rule {
+  height: 1px;
+  background: linear-gradient(90deg, var(--green) 0%, var(--mid) 40%, transparent 100%);
+  margin: 0 40px;
+  max-width: 1160px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  padding: 40px;
+  max-width: 1160px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.content-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  color: var(--navy);
+  margin-bottom: 16px;
+}
+
+.content-desc {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 12px 32px;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(75,174,79,0.3);
+}
+
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 40px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: fadeUp 0.5s ease forwards;
+}
+
+@keyframes fadeUp {
+  to { opacity:1; transform:translateY(0); }
+}
+
+.hero-fade {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 0.6s ease 0.05s forwards;
+}
+
+@media (max-width: 860px) {
+  header { padding: 0 20px; }
+  .hero, .content, .rule { padding-left: 20px; padding-right: 20px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-brand">
+    <svg class="logo-mark" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="42" height="42" rx="9" fill="#0F1C40"/>
+      <path d="M21 8 L28 18 L14 18 Z" fill="#4BAE4F"/>
+      <rect x="14" y="18" width="14" height="12" fill="#4BAE4F" opacity="0.7"/>
+      <circle cx="21" cy="32" r="3" fill="#4BAE4F"/>
+    </svg>
+    <div class="brand-text">
+      <div class="brand-main">VG<span>-Lat</span></div>
+      <div class="brand-sub">PROJECT SETUP</div>
+    </div>
+  </div>
+</header>
+
+<div class="hero hero-fade">
+  <div class="hero-eyebrow">// Latitude Project Auto-Setup</div>
+  <h1 class="hero-title">
+    VG-<span class="accent">Lat</span>
+  </h1>
+  <p class="hero-desc">
+    Automated Latitude project initialization and disposition configuration.
+  </p>
+</div>
+
+<div class="rule"></div>
+
+<div class="content fade-up">
+  <div class="content-title">Latitude Project Auto-Setup</div>
+  <div class="content-desc">
+    Streamline project initialization in Latitude. Automatically set up project structure, configure disposition parameters, and prepare the environment for field operations.
+  </div>
+  <button class="cta-button">Launch Application</button>
+</div>
+
+<footer>
+  &copy; 2025 Velocity Group &nbsp;·&nbsp; VG-Lat &nbsp;·&nbsp; Project Setup
+</footer>
+
+</body>
+</html>
