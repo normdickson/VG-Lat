@@ -3,257 +3,389 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VG-Lat — Latitude Project Setup</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>VG-Jobs · Job Registry</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --navy:   #1B2B5E;
-  --navy2:  #0F1C40;
-  --teal:   #00AEEF;
-  --green:  #4BAE4F;
-  --light:  #F0F4FA;
-  --mid:    #C8D8EE;
-  --text:   #1B2B5E;
-  --muted:  #6B7A99;
-  --card-bg:#FFFFFF;
-  --border: rgba(27,43,94,0.10);
-}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #f0f2f6; color: #1a2035; font-size: 14px; min-height: 100vh; }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+  /* HEADER */
+  .top-header { background: #1a2442; display: flex; align-items: center; padding: 0 32px; height: 60px; }
+  .logo { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.5px; margin-right: auto; }
+  .logo span { color: #38b2ac; }
+  .header-sub { font-size: 12px; color: #8899bb; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; }
 
-body {
-  font-family: 'Barlow', sans-serif;
-  background: var(--light);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+  /* SOURCE BAR */
+  .source-bar { background: #1e2d4a; display: flex; align-items: center; padding: 0 32px; height: 44px; gap: 4px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .src-label { font-size: 11px; color: #7a8faa; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; margin-right: 8px; }
+  .src-btn { padding: 5px 14px; border-radius: 4px; font-size: 12px; font-weight: 500; cursor: pointer; border: none; background: transparent; color: #8899bb; display: flex; align-items: center; gap: 5px; }
+  .src-btn.active { background: #38b2ac; color: #fff; }
+  .src-count { margin-left: auto; font-size: 12px; color: #7a8faa; }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 50% at 10% 0%, rgba(0,174,239,0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 90% 100%, rgba(75,174,79,0.06) 0%, transparent 55%);
-  pointer-events: none;
-  z-index: 0;
-}
+  /* TABS */
+  .tabs { background: #fff; border-bottom: 1px solid #e2e8f0; padding: 0 32px; display: flex; }
+  .tab { padding: 14px 20px; font-size: 11px; font-weight: 600; color: #64748b; cursor: pointer; display: flex; align-items: center; gap: 6px; border-bottom: 2px solid transparent; margin-bottom: -1px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .tab.active { color: #38b2ac; border-bottom-color: #38b2ac; }
+  .tab:hover:not(.active) { color: #334155; }
 
-header {
-  background: var(--navy);
-  height: 68px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 40px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.22);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
+  /* MAIN */
+  .main { padding: 28px 32px; }
+  .page-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; }
+  .page-eyebrow { font-size: 11px; color: #38b2ac; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; }
+  .page-title { font-size: 26px; font-weight: 700; color: #1a2035; letter-spacing: -0.5px; }
+  .page-meta { text-align: right; font-size: 12px; color: #94a3b8; line-height: 1.7; margin-top: 4px; }
+  .page-meta strong { color: #475569; font-weight: 600; }
 
-.header-brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
+  /* FILTER CARD */
+  .filter-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px 22px; margin-bottom: 20px; }
+  .filter-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .filter-title { font-size: 11px; font-weight: 700; color: #38b2ac; letter-spacing: 1.5px; text-transform: uppercase; }
+  .filter-reset { font-size: 12px; color: #38b2ac; cursor: pointer; background: none; border: none; font-weight: 500; font-family: inherit; }
+  .filter-reset:hover { text-decoration: underline; }
+  .filter-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; align-items: end; }
+  .filter-group { display: flex; flex-direction: column; gap: 4px; }
+  .filter-label { font-size: 11px; font-weight: 600; color: #64748b; letter-spacing: 0.5px; text-transform: uppercase; }
+  .filter-group select, .filter-group input {
+    height: 38px; border: 1px solid #d1d5db; border-radius: 5px;
+    padding: 0 10px; font-size: 13px; color: #1a2035;
+    background: #fff; outline: none; width: 100%; font-family: inherit;
+    appearance: auto;
+  }
+  .filter-group select:focus, .filter-group input:focus {
+    border-color: #38b2ac; box-shadow: 0 0 0 2px rgba(56,178,172,0.15);
+  }
 
-.logo-mark {
-  width: 42px;
-  height: 42px;
-  flex-shrink: 0;
-}
+  /* STAT BLOCKS */
+  .stat-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .stat-block { background: #fff; border-radius: 7px; border: 1px solid #e2e8f0; border-left-width: 4px; padding: 14px 20px; display: flex; align-items: center; gap: 18px; }
+  .stat-block.green { border-left-color: #22c55e; }
+  .stat-block.amber { border-left-color: #f59e0b; }
+  .stat-block.red { border-left-color: #ef4444; }
+  .stat-num { font-size: 36px; font-weight: 700; line-height: 1; min-width: 40px; }
+  .stat-block.green .stat-num { color: #16a34a; }
+  .stat-block.amber .stat-num { color: #d97706; }
+  .stat-block.red .stat-num { color: #dc2626; }
+  .stat-info { display: flex; flex-direction: column; gap: 3px; }
+  .stat-icon { font-size: 15px; }
+  .stat-label { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; }
+  .stat-block.green .stat-label { color: #16a34a; }
+  .stat-block.amber .stat-label { color: #d97706; }
+  .stat-block.red .stat-label { color: #dc2626; }
 
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
+  /* TABLE */
+  .table-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: #1e2d4a; }
+  th {
+    font-size: 11px; font-weight: 600; color: #a0b4cc; letter-spacing: 0.8px;
+    text-transform: uppercase; padding: 12px 14px; text-align: left;
+    white-space: nowrap; cursor: pointer; user-select: none;
+  }
+  th:hover { color: #fff; }
+  th.sorted { color: #38b2ac; }
+  td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #334155; white-space: nowrap; max-width: 200px; overflow: hidden; text-overflow: ellipsis; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8fafc; }
+  .td-primary { font-weight: 600; color: #1a2035; }
+  .td-muted { color: #94a3b8; font-size: 12px; }
+  .td-mono { font-family: 'Courier New', monospace; font-size: 12px; }
+  .job-num { color: #38b2ac; font-weight: 600; font-family: 'Courier New', monospace; font-size: 12px; }
 
-.brand-main {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  font-size: 22px;
-  color: #fff;
-  letter-spacing: 1px;
-}
+  .pill { display: inline-flex; align-items: center; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.3px; white-space: nowrap; }
+  .pill-green { background: #22c55e; color: #fff; }
+  .pill-blue  { background: #3b82f6; color: #fff; }
+  .pill-amber { background: #f59e0b; color: #fff; }
+  .pill-gray  { background: #94a3b8; color: #fff; }
 
-.brand-main span { color: var(--green); }
+  .empty { padding: 48px; text-align: center; color: #94a3b8; font-size: 13px; }
 
-.brand-sub {
-  font-family: 'Roboto Mono', monospace;
-  font-size: 10px;
-  color: rgba(255,255,255,0.45);
-  letter-spacing: 2px;
-  margin-top: 2px;
-}
+  .table-footer { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-top: 1px solid #f1f5f9; background: #f8fafc; }
+  .footer-info { font-size: 12px; color: #64748b; }
+  .footer-info strong { color: #1a2035; }
+  .page-btns { display: flex; gap: 4px; }
+  .pg-btn { background: #fff; border: 1px solid #e2e8f0; color: #475569; font-size: 12px; font-weight: 500; padding: 5px 11px; border-radius: 4px; cursor: pointer; font-family: inherit; }
+  .pg-btn:hover:not(:disabled) { border-color: #38b2ac; color: #38b2ac; }
+  .pg-btn.active { background: #38b2ac; border-color: #38b2ac; color: #fff; }
+  .pg-btn:disabled { opacity: 0.35; cursor: default; }
 
-.hero {
-  position: relative;
-  z-index: 1;
-  padding: 56px 40px 0;
-  max-width: 1160px;
-  margin: 0 auto;
-}
-
-.hero-eyebrow {
-  font-family: 'Roboto Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 3px;
-  color: var(--green);
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-
-.hero-title {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  font-size: clamp(38px, 5vw, 58px);
-  color: var(--navy);
-  line-height: 1.0;
-  margin-bottom: 14px;
-}
-
-.hero-title .accent { color: var(--green); }
-
-.hero-desc {
-  font-size: 16px;
-  color: var(--muted);
-  max-width: 540px;
-  line-height: 1.65;
-  font-weight: 400;
-  margin-bottom: 40px;
-}
-
-.rule {
-  height: 1px;
-  background: linear-gradient(90deg, var(--green) 0%, var(--mid) 40%, transparent 100%);
-  margin: 0 40px;
-  max-width: 1160px;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  z-index: 1;
-}
-
-.content {
-  position: relative;
-  z-index: 1;
-  padding: 40px;
-  max-width: 1160px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.content-title {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 800;
-  font-size: 28px;
-  color: var(--navy);
-  margin-bottom: 16px;
-}
-
-.content-desc {
-  font-size: 16px;
-  color: var(--muted);
-  line-height: 1.6;
-  margin-bottom: 40px;
-}
-
-.cta-button {
-  display: inline-block;
-  padding: 12px 32px;
-  background: var(--green);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.cta-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(75,174,79,0.3);
-}
-
-footer {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  padding: 40px;
-  font-family: 'Roboto Mono', monospace;
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 1px;
-}
-
-.fade-up {
-  opacity: 0;
-  transform: translateY(18px);
-  animation: fadeUp 0.5s ease forwards;
-}
-
-@keyframes fadeUp {
-  to { opacity:1; transform:translateY(0); }
-}
-
-.hero-fade {
-  opacity: 0;
-  transform: translateY(12px);
-  animation: fadeUp 0.6s ease 0.05s forwards;
-}
-
-@media (max-width: 860px) {
-  header { padding: 0 20px; }
-  .hero, .content, .rule { padding-left: 20px; padding-right: 20px; }
-}
+  @media (max-width: 900px) {
+    .filter-grid { grid-template-columns: repeat(2, 1fr); }
+    .main { padding: 16px; }
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-brand">
-    <svg class="logo-mark" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="42" height="42" rx="9" fill="#0F1C40"/>
-      <path d="M21 8 L28 18 L14 18 Z" fill="#4BAE4F"/>
-      <rect x="14" y="18" width="14" height="12" fill="#4BAE4F" opacity="0.7"/>
-      <circle cx="21" cy="32" r="3" fill="#4BAE4F"/>
-    </svg>
-    <div class="brand-text">
-      <div class="brand-main">VG<span>-Lat</span></div>
-      <div class="brand-sub">PROJECT SETUP</div>
+<div class="top-header">
+  <div class="logo">VG-<span>Jobs</span></div>
+  <div class="header-sub">Job Registry · Azure SQL</div>
+</div>
+
+<div class="source-bar">
+  <span class="src-label">Data Source</span>
+  <button class="src-btn active">🎭 Demo</button>
+  <button class="src-btn">⚡ Azure Function</button>
+  <span class="src-count" id="src-count">Sample data — 8 records</span>
+</div>
+
+<div class="tabs">
+  <div class="tab active">⊙ Job Grid</div>
+  <div class="tab">⇄ Export</div>
+  <div class="tab">🕓 History</div>
+</div>
+
+<div class="main">
+  <div class="page-top">
+    <div>
+      <div class="page-eyebrow">Velocity Geomatics · Job Registry</div>
+      <div class="page-title">Job Query &amp; Grid</div>
+    </div>
+    <div class="page-meta" id="page-meta">—</div>
+  </div>
+
+  <div class="filter-card">
+    <div class="filter-header">
+      <span class="filter-title">// Filter Parameters</span>
+      <button class="filter-reset" onclick="resetFilters()">↺ Reset</button>
+    </div>
+    <div class="filter-grid">
+      <div class="filter-group">
+        <div class="filter-label">Work Status</div>
+        <select id="f-status">
+          <option value="">All Statuses</option>
+          <option>Job Completed</option>
+          <option>Active</option>
+          <option>Pending</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <div class="filter-label">Job Type</div>
+        <select id="f-type">
+          <option value="">All Types</option>
+          <option>Geomatics</option>
+          <option>Integrity</option>
+          <option>Subdivision</option>
+          <option>RPR</option>
+          <option>Lot Grade</option>
+          <option>Pipeline Integrity</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <div class="filter-label">Client</div>
+        <select id="f-client">
+          <option value="">All Clients</option>
+          <option>velocitygeomatics</option>
+          <option>conocophillips</option>
+          <option>blackstonegeomatics</option>
+          <option>Vange Nygaard</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <div class="filter-label">Locality</div>
+        <input id="f-locality" type="text" placeholder="Search locality…">
+      </div>
+      <div class="filter-group">
+        <div class="filter-label">Date From</div>
+        <input id="f-datefrom" type="date">
+      </div>
+      <div class="filter-group">
+        <div class="filter-label">Date To</div>
+        <input id="f-dateto" type="date">
+      </div>
+      <div class="filter-group">
+        <div class="filter-label">Search</div>
+        <input id="f-search" type="text" placeholder="Job #, name, ref…">
+      </div>
     </div>
   </div>
-</header>
 
-<div class="hero hero-fade">
-  <div class="hero-eyebrow">// Latitude Project Auto-Setup</div>
-  <h1 class="hero-title">
-    VG-<span class="accent">Lat</span>
-  </h1>
-  <p class="hero-desc">
-    Automated Latitude project initialization and disposition configuration.
-  </p>
-</div>
-
-<div class="rule"></div>
-
-<div class="content fade-up">
-  <div class="content-title">Latitude Project Auto-Setup</div>
-  <div class="content-desc">
-    Streamline project initialization in Latitude. Automatically set up project structure, configure disposition parameters, and prepare the environment for field operations.
+  <div class="stat-row">
+    <div class="stat-block green">
+      <div class="stat-num" id="s-completed">0</div>
+      <div class="stat-info">
+        <span class="stat-icon">✅</span>
+        <span class="stat-label">Completed</span>
+      </div>
+    </div>
+    <div class="stat-block amber">
+      <div class="stat-num" id="s-active">0</div>
+      <div class="stat-info">
+        <span class="stat-icon">⚠</span>
+        <span class="stat-label">Active</span>
+      </div>
+    </div>
+    <div class="stat-block red">
+      <div class="stat-num" id="s-other">0</div>
+      <div class="stat-info">
+        <span class="stat-icon">⊘</span>
+        <span class="stat-label">Other / Pending</span>
+      </div>
+    </div>
   </div>
-  <button class="cta-button">Launch Application</button>
+
+  <div class="table-card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th onclick="sortBy('jobNumber')" id="th-jobNumber">Job #</th>
+            <th onclick="sortBy('jobDate')" id="th-jobDate">Date</th>
+            <th onclick="sortBy('jobDescription')" id="th-jobDescription">Description</th>
+            <th onclick="sortBy('client')" id="th-client">Client</th>
+            <th onclick="sortBy('workStatus')" id="th-workStatus">Status</th>
+            <th onclick="sortBy('jobType')" id="th-jobType">Job Type</th>
+            <th onclick="sortBy('jobName')" id="th-jobName">Job Name</th>
+            <th onclick="sortBy('clientRefNo')" id="th-clientRefNo">Client Ref</th>
+            <th onclick="sortBy('jobFolder')" id="th-jobFolder">Folder</th>
+            <th>Lat / Lon</th>
+          </tr>
+        </thead>
+        <tbody id="grid-body"></tbody>
+      </table>
+    </div>
+    <div class="table-footer">
+      <div class="footer-info" id="footer-info">—</div>
+      <div class="page-btns" id="page-btns"></div>
+    </div>
+  </div>
 </div>
 
-<footer>
-  &copy; 2025 Velocity Group &nbsp;·&nbsp; VG-Lat &nbsp;·&nbsp; Project Setup
-</footer>
+<script>
+const PAGE_SIZE = 25;
+let currentPage = 1;
+let sortCol = 'jobDate';
+let sortDir = -1;
+let filtered = [];
 
+// ── DEMO DATA ────────────────────────────────────────────────────────────────
+// Replace this with a fetch() call to your Azure Function URL when ready.
+// e.g. const DATA = await fetch('/api/jobs?status='+status).then(r=>r.json());
+const DATA = [
+  { jobNumber:'ADMIN',    jobDate:'2018-09-28', jobDescription:'ADMIN',                      client:'velocitygeomatics',   workStatus:'Job Completed', jobType:'Geomatics',          jobName:'ADMIN',                                            clientRefNo:'',                       jobFolder:'M:\\JOBS\\ADMIN',     lat:'55.1564', lon:'-118.8246', locality:'Grande Prairie' },
+  { jobNumber:'130005P',  jobDate:'2014-12-31', jobDescription:'Pipeline Integrity',          client:'conocophillips',       workStatus:'Job Completed', jobType:'Pipeline Integrity', jobName:'ELMWORTH 12-26-70-13 to 14-29-70-12 STN B',        clientRefNo:'',                       jobFolder:'',                    lat:'55.0974', lon:'-119.8047', locality:'Elmworth' },
+  { jobNumber:'150078G',  jobDate:'2015-03-26', jobDescription:'150078G',                    client:'Vange Nygaard',        workStatus:'Job Completed', jobType:'Subdivision',        jobName:'Subdivision SW 17-73-11-W6',                       clientRefNo:'',                       jobFolder:'C:\\JOBS\\150078G',   lat:'55.3204', lon:'-115.6615', locality:'Big Lakes' },
+  { jobNumber:'150246G',  jobDate:'2015-07-02', jobDescription:'150246G',                    client:'velocitygeomatics',    workStatus:'Job Completed', jobType:'Lot Grade',          jobName:'150246G',                                          clientRefNo:'',                       jobFolder:'C:\\JOBS\\150246G',   lat:'53.2400', lon:'-113.5336', locality:'Leduc' },
+  { jobNumber:'150001P',  jobDate:'2015-01-02', jobDescription:'Pipeline Integrity',          client:'conocophillips',       workStatus:'Job Completed', jobType:'Pipeline Integrity', jobName:'BERLAND RIVER 9-18-61-24 to 8-24-60-25-W5',       clientRefNo:'36096_10',               jobFolder:'C:\\JOBS\\150001P',   lat:'54.2777', lon:'-117.5794', locality:'Berland' },
+  { jobNumber:'150181G',  jobDate:'2015-06-09', jobDescription:'Blackstone SML Amendment',   client:'blackstonegeomatics',  workStatus:'Job Completed', jobType:'Geomatics',          jobName:'Blackstone SML Amendment',                        clientRefNo:'',                       jobFolder:'C:\\JOBS\\150181G',   lat:'55.1377', lon:'-114.3544', locality:'' },
+  { jobNumber:'150249G',  jobDate:'2015-07-03', jobDescription:'Charles Dixon RPR',          client:'velocitygeomatics',    workStatus:'Job Completed', jobType:'RPR',                jobName:'Charles Dixon',                                   clientRefNo:'Boje sale to Fabrig #55183', jobFolder:'C:\\JOBS\\150249G', lat:'50.7391', lon:'-113.9391', locality:'Okotoks' },
+  { jobNumber:'150002P',  jobDate:'2015-01-15', jobDescription:'Active Pipeline Survey',     client:'conocophillips',       workStatus:'Active',        jobType:'Integrity',          jobName:'Active Survey Line NW',                           clientRefNo:'REF-2015-002',           jobFolder:'C:\\JOBS\\150002P',   lat:'54.5000', lon:'-117.2000', locality:'Grande Prairie' },
+];
+
+function pillClass(s) {
+  if (!s) return 'pill-gray';
+  const l = s.toLowerCase();
+  if (l.includes('complet')) return 'pill-green';
+  if (l.includes('active'))  return 'pill-blue';
+  if (l.includes('pending')) return 'pill-amber';
+  return 'pill-gray';
+}
+
+function applyFilters() {
+  const status   = document.getElementById('f-status').value;
+  const type     = document.getElementById('f-type').value;
+  const client   = document.getElementById('f-client').value;
+  const locality = document.getElementById('f-locality').value.toLowerCase();
+  const df       = document.getElementById('f-datefrom').value;
+  const dt       = document.getElementById('f-dateto').value;
+  const search   = document.getElementById('f-search').value.toLowerCase();
+
+  filtered = DATA.filter(r => {
+    if (status   && r.workStatus !== status) return false;
+    if (type     && r.jobType !== type) return false;
+    if (client   && r.client !== client) return false;
+    if (locality && !r.locality.toLowerCase().includes(locality)) return false;
+    if (df && r.jobDate < df) return false;
+    if (dt && r.jobDate > dt) return false;
+    if (search && !([r.jobNumber, r.jobName, r.clientRefNo, r.jobDescription].join(' ').toLowerCase().includes(search))) return false;
+    return true;
+  });
+
+  const nCompleted = filtered.filter(r => r.workStatus.toLowerCase().includes('complet')).length;
+  const nActive    = filtered.filter(r => r.workStatus.toLowerCase().includes('active')).length;
+  document.getElementById('s-completed').textContent = nCompleted;
+  document.getElementById('s-active').textContent    = nActive;
+  document.getElementById('s-other').textContent     = filtered.length - nCompleted - nActive;
+  document.getElementById('src-count').textContent   = 'Sample data — ' + filtered.length + ' records';
+
+  sortData();
+  currentPage = 1;
+  render();
+}
+
+function sortData() {
+  filtered.sort((a, b) => {
+    const av = a[sortCol] || '', bv = b[sortCol] || '';
+    return av < bv ? -sortDir : av > bv ? sortDir : 0;
+  });
+}
+
+function sortBy(col) {
+  sortDir = sortCol === col ? -sortDir : -1;
+  sortCol = col;
+  document.querySelectorAll('th').forEach(t => t.classList.remove('sorted'));
+  const th = document.getElementById('th-' + col);
+  if (th) th.classList.add('sorted');
+  applyFilters();
+}
+
+function resetFilters() {
+  ['f-status','f-type','f-client','f-locality','f-datefrom','f-dateto','f-search']
+    .forEach(id => document.getElementById(id).value = '');
+  applyFilters();
+}
+
+function render() {
+  const total = filtered.length;
+  const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  if (currentPage > pages) currentPage = pages;
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const rows  = filtered.slice(start, start + PAGE_SIZE);
+
+  document.getElementById('page-meta').innerHTML =
+    '<strong>' + total + '</strong> records · Period: all';
+  document.getElementById('footer-info').innerHTML = total === 0
+    ? 'No results'
+    : 'Showing <strong>' + (start+1) + '–' + Math.min(start+PAGE_SIZE, total) + '</strong> of <strong>' + total + '</strong> records';
+
+  const tbody = document.getElementById('grid-body');
+  tbody.innerHTML = rows.length === 0
+    ? '<tr><td colspan="10" class="empty">No records match the current filters.</td></tr>'
+    : rows.map(r => `
+      <tr>
+        <td><span class="job-num">${r.jobNumber}</span></td>
+        <td class="td-muted">${r.jobDate}</td>
+        <td class="td-primary" title="${r.jobDescription}">${r.jobDescription}</td>
+        <td class="td-muted" title="${r.client}">${r.client}</td>
+        <td><span class="pill ${pillClass(r.workStatus)}">${r.workStatus}</span></td>
+        <td>${r.jobType}</td>
+        <td title="${r.jobName}">${r.jobName}</td>
+        <td class="td-muted td-mono">${r.clientRefNo || '—'}</td>
+        <td class="td-muted" title="${r.jobFolder}">${r.jobFolder ? (r.jobFolder.split('\\').pop() || r.jobFolder) : '—'}</td>
+        <td class="td-muted td-mono" style="font-size:11px">${r.lat && r.lon ? r.lat + ', ' + r.lon : '—'}</td>
+      </tr>`).join('');
+
+  let btns = `<button class="pg-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹ Prev</button>`;
+  for (let p = 1; p <= pages; p++) {
+    btns += `<button class="pg-btn ${p===currentPage?'active':''}" onclick="goPage(${p})">${p}</button>`;
+  }
+  btns += `<button class="pg-btn" onclick="goPage(${currentPage+1})" ${currentPage===pages?'disabled':''}>Next ›</button>`;
+  document.getElementById('page-btns').innerHTML = btns;
+}
+
+function goPage(p) {
+  const pages = Math.ceil(filtered.length / PAGE_SIZE);
+  if (p < 1 || p > pages) return;
+  currentPage = p;
+  render();
+}
+
+['f-status','f-type','f-client','f-locality','f-datefrom','f-dateto','f-search'].forEach(id => {
+  document.getElementById(id).addEventListener('input', applyFilters);
+  document.getElementById(id).addEventListener('change', applyFilters);
+});
+
+applyFilters();
+</script>
 </body>
 </html>
